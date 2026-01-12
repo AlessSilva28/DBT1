@@ -44,4 +44,6 @@ models:
     
     marts:
       +materialized: table
+      marketing:
+        +materialized: table
 
