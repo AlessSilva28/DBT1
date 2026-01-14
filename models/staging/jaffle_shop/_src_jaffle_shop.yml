@@ -1,7 +1,7 @@
 sources:
-  - name: jaffle_Shop
+  - name: jaffle_shop
     database: dbt-tutorial
-    schema: jaffle_Shop
+    schema: jaffle_shop
     tables:
       - name: customers
       - name: orders
