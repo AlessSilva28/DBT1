@@ -11,3 +11,12 @@ models:
         data_tests:
           - unique
           - not_null
+      - name: order_status
+        data_tests:
+          - accepted_values:
+              values:
+                - completed
+                - shipped
+                - returned
+                - placed
+                - return_pending
