@@ -2,6 +2,7 @@ sources:
   - name: stripe
     database: dbt-tutorial
     schema: stripe
+    description: A clone of a Postgres application DB.
     tables:
       - name: payment
         config:
@@ -13,3 +14,6 @@ sources:
             error_after:
               count: 34
               period: hour
+        columns:
+          - name: amount
+            description: The amount that a customer has spent in an order
