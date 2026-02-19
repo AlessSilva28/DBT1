@@ -12,31 +12,40 @@ with
         select * from {{ source("stripe", "payment") }}
     ),
 
+    payments as (
+        select
+            order_id,
+            created_at,
+            amount,
+            payment_status
+        from {{ ref('stg_stripe__payments') }}
+    ),
+    
     orders as (
         select
-            id as order_id,
-            user_id as customer_id,
+            order_id,
+            customer_id,
             order_date as order_placed_at,
-            status as order_status
-        from raw_orders
+            order_status
+        from {{ ref('stg_jaffle_shop__orders') }}
     ),
      
     customers as (
         select  
-            id as customer_id,
+            customer_id,
             first_name as customer_first_name,
             last_name as customer_last_name
-        from raw_customers
+        from {{ ref('stg_jaffle_shop__customers') }}
     ),
 
     -- Logical CTEs
     order_amount as (
         select
-            orderid as order_id,
-            max(created) as payment_finalized_date,
-            sum(amount) / 100.0 as total_amount_paid
-        from raw_payments
-        where status <> 'fail'
+            order_id,
+            max(created_at) as payment_finalized_date,
+            sum(amount) as total_amount_paid
+        from payments
+        where payment_status <> 'fail'
         group by 1
     ),
 
