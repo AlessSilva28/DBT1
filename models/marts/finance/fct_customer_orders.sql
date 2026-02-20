@@ -22,6 +22,10 @@ payments as (
 
 -- Logical CTEs
 
+-------------------------------
+ 
+-------------------------------
+
 completed_payments as (
 
   select 
